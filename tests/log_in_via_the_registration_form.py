@@ -1,48 +1,38 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+from locators import Locators
+from conftest import new_login
 
-driver = webdriver.Chrome()
+def test_creating_an_object(initializing_the_driver):
+    driver = initializing_the_driver
 
-driver.get("https://stellarburgers.nomoreparties.site/")
+    driver.get(Locators.HOME_PAGE_URL)
 
 # Добавить явное ожидание загрузки страницы
-WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, "button_button__33qZ0.button_button_type_primary__1O7Bx.button_button_size_large__G21Vg")))
+    WebDriverWait(driver, 3).until(Locators.WAITING_FOR_THE_PAGE)
 
 # Нажать на кнопку "Войти в аккаунт"
-driver.find_element(By.CLASS_NAME, "button_button__33qZ0.button_button_type_primary__1O7Bx.button_button_size_large__G21Vg").click()
-
+    driver.find_element(*Locators.CLICK_LOG_IN_TO_YOUR_ACCOUNT).click()
 # Дождаться текст "Зарегистрироваться"
-WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, 'Auth_link__1fOlj')))
-
+    WebDriverWait(driver, 3).until(Locators.WEIT_FOR_THE_TEXT_TO_REGISTER)
 # Нажать на текст "Зарегистрироваться"
-driver.find_element(By.CLASS_NAME, 'Auth_link__1fOlj').click()
+    driver.find_element(*Locators.CLICK_ON_THE_SIGN_UP_TEXT).click()
 
 # Дождаться кликабельности текста "Войти"
-WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Войти')]")))
+    WebDriverWait(driver, 3).until(Locators.WAIT_TEXT_CLICKABLE_LOGIN)
 
 # Кликнуть на текст "Войти"
-driver.find_element(By.XPATH, "//a[contains(text(), 'Войти')]").click()
+    driver.find_element(*Locators.CLICK_ON_LOGIN_TEXT).click()
 
-Email = driver.find_element(By.XPATH, "//label[text()='Email']/following-sibling::input")
 # Ввести значение в поле 'Email'
-Email.send_keys('jenya_chabanov_20_111@yandex.ru')
+    driver.find_element(*Locators.FIND_THE_EMAIL_FIELD).send_keys(new_login)
 
-Password = driver.find_element(By.XPATH, "//label[text()='Пароль']/following-sibling::input")
 # Ввести значение в поле 'Пароль'
-Password.send_keys('123456789')
+    driver.find_element(*Locators.FIND_THE_PASSWORD_FIELD).send_keys('123456789')
 
 # Кликнуть на кнопку "Войти"
-driver.find_element(By.XPATH, "//button[contains(text(), 'Войти')]").click()
-
-# Дождаться загрузки главной страницы
-WebDriverWait(driver, 3).until(expected_conditions.url_to_be("https://stellarburgers.nomoreparties.site/"))
+    driver.find_element(*Locators.CLICK_LOG_IN).click()
 
 # Проверить вход по кнопке "Личный Кабинет"
-expected_url = "https://stellarburgers.nomoreparties.site/"
-current_url = driver.current_url
-assert current_url == expected_url
-
-# Закрой браузер
-driver.quit()
+    expected_url = Locators.URL_LOGIN_PAGE
+    current_url = driver.current_url
+    assert current_url == expected_url
