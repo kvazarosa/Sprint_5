@@ -1,10 +1,11 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import Locators
+from urls import Urls
 
 def test_creating_an_object(initializing_the_driver):
     driver = initializing_the_driver
 
-    driver.get(Locators.HOME_PAGE_URL)
+    driver.get(Urls.HOME_PAGE_URL)
 
 # Добавить явное ожидание загрузки страницы
     WebDriverWait(driver, 3).until(Locators.WAITING_FOR_THE_PAGE)
@@ -12,5 +13,11 @@ def test_creating_an_object(initializing_the_driver):
 # Кликнуть на раздел "Соусы"
     driver.find_element(*Locators.CLICK_ON_SAUCES).click()
 
-# Проверить класс до и после клика
-    assert 'tab_tab__1SPyG  pt-4 pr-10 pb-4 pl-10 noselect' != 'tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect'
+# Сохраняем элемент, у которого нужно проверить классы
+    element = driver.find_element(*Locators.CLICK_ON_SAUCES)
+
+# Получаем значение атрибута class
+    classes = element.get_attribute('class')
+
+# Проверяем, содержит ли строка класса 'type_current'
+    assert 'type_current' not in classes

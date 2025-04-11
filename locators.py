@@ -46,8 +46,3 @@ class Locators():
             (By.XPATH, "//button[contains(text(), 'Выход')]"))) # Дождаться кликабельности кнопки "Выход"
     WAIT_CLICKABILITY_ORDER_BUTTON = (expected_conditions.visibility_of_element_located(
             (By.XPATH, "//h2[contains(text(), 'Вход')]"))) # Дождаться кликабельности кнопки "Лента заказов"
-
-
-    HOME_PAGE_URL = "https://stellarburgers.nomoreparties.site/" # ссылка на главную страницу
-    URL_LOGIN_PAGE = "https://stellarburgers.nomoreparties.site/login" # ссылка на страницу входа
-

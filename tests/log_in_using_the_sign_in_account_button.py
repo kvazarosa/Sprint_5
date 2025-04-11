@@ -1,11 +1,12 @@
 from conftest import new_login
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import Locators
+from urls import Urls
 
 def test_creating_an_object(initializing_the_driver):
     driver = initializing_the_driver
 
-    driver.get(Locators.HOME_PAGE_URL)
+    driver.get(Urls.HOME_PAGE_URL)
 
 # Добавить явное ожидание загрузки страницы
     WebDriverWait(driver, 3).until(Locators.WAITING_FOR_THE_PAGE)
@@ -26,6 +27,6 @@ def test_creating_an_object(initializing_the_driver):
     driver.find_element(*Locators.CLICK_LOG_IN).click()
 
 # Проверить вход по кнопке "Войти в аккаунт"
-    expected_url = Locators.URL_LOGIN_PAGE
+    expected_url = Urls.URL_LOGIN_PAGE
     current_url = driver.current_url
     assert current_url == expected_url

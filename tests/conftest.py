@@ -8,7 +8,5 @@ new_login = f"jenya_chabanov_20_{random.randint(100, 999)}@yandex.ru"
 @pytest.fixture
 def initializing_the_driver():
     driver = webdriver.Chrome()
-    try:
-        yield driver  # Передаем драйвер тестам
-    finally:
-        driver.quit()
+    yield driver
+    driver.quit()
